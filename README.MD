@@ -1,4 +1,5 @@
 # Validus Validation Pipeline
+![Build Status](https://circleci.com/gh/richraid21/validus.svg?style=shield)    
 This library is designed to allow the creation and re-use of validator objects, organize them into sets called pipelines and reuse those pipelines for mix & match functionality.
 
 ### Status:
