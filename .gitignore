@@ -1,0 +1,13 @@
+
+#Ignore Distribution files. Users can either download artifacts from the website or build it themselves
+dist
+
+#Node_modules
+node_modules
+
+
+#Log files
+*.log
+
+#Backup files
+*.bak
