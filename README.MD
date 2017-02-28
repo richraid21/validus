@@ -5,7 +5,13 @@ This library is designed to allow the creation and re-use of validator objects, 
 ### Status:
 * Project: In-progress Alpha    
 * Tests: In-progress    
-* Docs: To-Do    
+* Docs: To-Do     
+
+### Future Features & Changes List
+* Convert library to return promises rather than synchronous values so validators can perform async actions
+* Grouping specific pipelines into grids (or some other terminology) that can then be executed on an object (such as a new entry in a grid)
+* Probably remove direct access to validators and pipelines so I can implement middleware at creation time, rather than require consuming code to read the contract (API breaking)
+* Some type of dynamic loading for packages of validators?...maybe...
 
 ### Build & Test Instructions:
 
