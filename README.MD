@@ -18,7 +18,7 @@ This library is designed to allow the creation and re-use of validator objects, 
 ```
 yarn install
 yarn run build
-yarn run test
+yarn run tests
 ```
 
 ### Usage
