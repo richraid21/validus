@@ -24,30 +24,24 @@ yarn run test
 ### Usage
 ```
 
-Validus.validators.isNotEmpty = {
-	description: 'Ensure that the value is not empty',
-	msg: 'Cannot be empty',
-	valid: (value) => { return value != 'undefined' && value.length > 0},
+var isNameRich = {
+	description: 'Ensure the value equals Rich',
+	msg: 'Does not equal Rich',
+	valid: (value) => { return value === 'Rich'},
 }
 
-Validus.validators.isBasicEmail = {
-	description: 'Ensure that the value contains the email characteristics',
-	msg: 'Must contain @ and .',
-	valid: (value) => {return value.includes('@') && value.includes('.')}
-}
+Validus.addValidator('isNameRich',isNameRich) 
+Validus.createPipeline('nameCheck',['isNameRich']);
 
-
-Validus.createPipeline('email',['isNotEmpty','isBasicEmail']);
-
-console.log(Validus.validate('BadEmail','email'));
+Validus.prep({pipe: 'nameCheck'}).inputVal('Not Rich').validate();
 
 >
-{
-    originalValue: 'BadEmail',
-	value: 'BadEmail',
-	isValid: false,
-	description: 'Ensure that the value contains the email characteristics',
-	msg: 'Must contain @ and .'
+Object {
+    originalValue: "Not Rich", 
+    value: "Not Rich", 
+    isValid: false, 
+    description: "Ensure the value equals Rich", 
+    msg: "Does not equal Rich"
 }
 ```
 
