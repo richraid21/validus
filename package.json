@@ -6,22 +6,18 @@
   "author": "Rich Dillon <richraid21@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "gulp test",
-    "build": "gulp build"
+    "prebuild": "[ -d dist ] || mkdir dist",
+    "build": "babel src --out-file ./dist/validus.js --presets=es2015",
+    "postbuild": "uglifyjs ./dist/validus.js -c -o ./dist/validus.min.js",
+    "tests": "mocha --ui tdd --recursive ./tests",
+    "all": "yarn run build && yarn run tests"
   },
   "dependencies": {},
   "devDependencies": {
-    "babel-polyfill": "^6.23.0",
+    "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "chai": "^3.5.0",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-mocha-phantomjs": "^0.12.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.0.1",
     "mocha": "^3.2.0",
-    "pump": "^1.0.2"
+    "uglify-js": "^2.8.4"
   }
 }

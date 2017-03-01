@@ -6,6 +6,38 @@ var Validus = (function () {
 	var validators = {};
 	var pipelines = {};
 	var plugins = {};
+    
+    var ExecutionInstance = function(){
+        this.type = '';
+        this.name = '';
+        this.input = {};
+    }
+    
+    ExecutionInstance.prototype = {
+        setType: function(t) {
+            this.type = t;
+            return this;
+         },
+        setName: function(n) {
+            this.name = n;
+            return this;
+         },
+        inputVal: function(i) {
+            this.input = i;
+            return this;
+         },
+        validate: function() {
+            var pipe = pipelines[this.name];
+            var response = {};
+		
+            for (var name of pipe){
+                response = data.validateStep(response.value || this.input,name);
+                    
+            }
+            
+            return response;
+		}
+    };
 	
 	data.registerPlugin = (name) => {plugins[name] = true}
 	
@@ -49,6 +81,16 @@ var Validus = (function () {
         }
         
     }
+    
+    data.prep = (options) => {
+        var eo = new ExecutionInstance();
+        var etype = options.hasOwnProperty('pipe') ? 'pipeline' : ''; 
+        var name = options.pipe;
+        
+        eo.setType(etype).setName(name);
+        return eo;
+        
+    }
 	
 	data.validateBoolean = (value, pipeline) => {
 		var res = data.validate(value,pipeline);
@@ -81,21 +123,22 @@ var Validus = (function () {
 		response.value = value;
 		return response;
 	}
-	
-	data.validate = (value, pipeline) => {
-		var pipe = pipelines[pipeline];
-		
-		var response = {};
-		
-		for (var name of pipe){
-			response = data.validateStep(response.value || value,name);
-				
-		}
-		
-		return response;
-		
-	};
 
 	return data;
 	
-}());
+}(Validus || {}));
+
+/**
+    We need this to determine whether we're in a Node enviroment or the browser. 
+    This allows us to run it anywhere and also test in both the browser or CLI.
+**/
+
+ if( typeof exports !== 'undefined' ) {
+    if( typeof module !== 'undefined' && module.exports ) {
+      exports = module.exports = Validus
+    }
+    exports.Validus = Validus
+  } 
+  else {
+    window.Validus = Validus
+  }

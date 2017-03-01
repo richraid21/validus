@@ -1,6 +1,6 @@
 var Validus = (function (data) {
 	
-	data.registerPlugin("explain")
+	//data.registerPlugin("explain")
 	
     data.explainPretty = (value, pipeline) => {
 		var res = data.explain(value,pipeline);
@@ -49,4 +49,4 @@ var Validus = (function (data) {
 	}
 
 	return data;
-}(Validus));
+}(Validus || {}));

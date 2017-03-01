@@ -1,7 +1,3 @@
-dependencies:
-  post:
-    - npm install --dev
-    
 test:
   override:
-    - gulp test
+    - npm run tests

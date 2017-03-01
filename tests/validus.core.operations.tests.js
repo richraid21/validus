@@ -1,91 +1,32 @@
 
-var test = Mocha.describe;
-var assert = chai.assert;
+var Validus = Validus || require('../dist/validus.js').Validus;
 
-test('Validus Core Operations', function() {
-    
-  it('Should accept and store a validators object using registerValidator', function(){
-      
-    var isNotEmpty = {
-        description: "Ensure that the value is not empty",
-        msg: "{field} cannot be empty",
-        valid: function(value){ return value.length > 0},
-    }
-	
-	Validus.registerValidator('isNotEmpty',isNotEmpty);
-    
-    assert.equal(
-        Validus.getValidators().hasOwnProperty('isNotEmpty'), 
-        true, 
-        'Did not store the validator properly'
-        );
-      
-  });
+suite('Validus Core Operations', function() {
+
+    suite('Validators', function() {
+        test('Should register a validator and return the correct object')
+        test('Should add a validator using the alias add() and return the correct object')
+        test('Should return all registered validators')
+    });
   
-  it('Should accept and store a pipeline object via createPipeline method', function(){
-      
-    Validus.createPipeline("email",['isNotEmpty'])
+    suite('Pipelines', function() {
+        test('Should register a pipeline and return the correct object')
+        test('Should return all pipelines when requested')
+        test('Should return a single, correctly identified pipeline')
+        test('Should add a validator at the specified index of a pipeline')
+    });
+  
+    suite('Validating', function() {
+        test('Prep should return an Execution Instance')
+        test('Input should return the same Execution Instance')
+        test('Validate should properly execute the pipeline')
+        test('Should execute a single validator')
+        test('Should return a simple boolean when using simple()')
+    });    
     
-    assert.equal(
-        Validus.getPipelines().hasOwnProperty('email'), 
-        true, 
-        'Did not store the pipeline properly'
-        );
-        
-    assert.equal(
-        Validus.getPipeline('email').length, 
-        1, 
-        'Pipeline is not the correct length after creation'
-        );
-        
-     assert.equal(
-        Validus.getPipeline('email')[0],
-        'isNotEmpty', 
-        'The pipeline did not store the correct validator name'
-        );
-      
-  });
-  
-  it('Should return the correct pipeline object when requested', function(){
-      
-    var pipe = Validus.getPipeline("email")
-    
-    assert.equal(
-        pipe.length, 
-        1, 
-        'Requested pipe is not the correct length'
-        );
-        
-    assert.equal(
-        pipe[0], 
-        'isNotEmpty', 
-        'Pipe contents are not correct'
-        );
-      
-  });
-  
-  it('Should execute the validation pipeline with a step count of 1', function(){
-      
-    var pipe = Validus.getPipeline("email")
-    
-    var res = Validus.validate("testValue","email")
-        
-    assert.equal(
-        typeof res, 
-        'object', 
-        'Validation response is not an object'
-        );
-    
-    assert.equal(
-        res.hasOwnProperty('isValid'), 
-        true, 
-        'Response does not contain the isValid property'
-        );
-        
-     
-      
-  });
-  
-  
-  
-});
+    suite('Plugin Registry', function() {
+        test('Should accept a new plugin')
+        test('Should return all registered plugins')
+    });
+ 
+}); //Validus Core Operations
