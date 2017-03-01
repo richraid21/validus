@@ -1,5 +1,7 @@
 var Validus = (function (data) {
 	
+	data.registerPlugin("explain")
+	
     data.explainPretty = (value, pipeline) => {
 		var res = data.explain(value,pipeline);
 		var output = "";

@@ -4,34 +4,27 @@ var assert = chai.assert;
 
 test('Validus Core Structure', function() {
     
-  it('Should have a public validators object', function(){
+  it('Should have a validators object', function(){
       
-      assert.equal(
-        Validus.hasOwnProperty('validators'), 
-        true, 
+      let validators = Validus.getValidators();
+	  
+	  assert.equal(
+        typeof validators, 
+        'object', 
         'Validus Core does not have a validators object'
-        );
-       
-      assert.equal(
-        typeof Validus.validators === 'object', 
-        true, 
-        'Validators object is not an object'
         );
   });
   
-  it('Should have a public pipeline object', function(){
+  it('Should have a pipeline object', function(){
       
+	  let pipelines = Validus.getPipelines();
+	  
       assert.equal(
-        Validus.hasOwnProperty('pipelines'), 
-        true, 
+        typeof pipelines, 
+        'object', 
         'Validus Core does not have a pipelines object'
         );
-      
-      assert.equal(
-        typeof Validus.pipelines === 'object', 
-        true, 
-        'Pipelines property is not an object'
-        );
+		
   });
   
   it('Should have a public validate function', function(){

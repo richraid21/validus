@@ -4,42 +4,20 @@ var assert = chai.assert;
 
 test('Validus Core Operations', function() {
     
-  it('Should accept and store a validators object', function(){
+  it('Should accept and store a validators object using registerValidator', function(){
       
-    Validus.validators.isNotEmpty = {
+    var isNotEmpty = {
         description: "Ensure that the value is not empty",
         msg: "{field} cannot be empty",
         valid: function(value){ return value.length > 0},
     }
+	
+	Validus.registerValidator('isNotEmpty',isNotEmpty);
     
     assert.equal(
-        Validus.validators.hasOwnProperty('isNotEmpty'), 
+        Validus.getValidators().hasOwnProperty('isNotEmpty'), 
         true, 
         'Did not store the validator properly'
-        );
-      
-  });
-  
-  it('Should accept and store a pipeline object via direct manipulation', function(){
-      
-    Validus.pipelines.test = ['isNotEmpty']
-    
-    assert.equal(
-        Validus.pipelines.hasOwnProperty('test'), 
-        true, 
-        'Did not store the pipeline properly'
-        );
-        
-    assert.equal(
-        Validus.pipelines.test.length, 
-        1, 
-        'Pipeline is not the correct length after creation'
-        );
-        
-     assert.equal(
-        Validus.pipelines.test[0], 
-        'isNotEmpty', 
-        'The pipeline did not store the correct validator name'
         );
       
   });
@@ -49,19 +27,19 @@ test('Validus Core Operations', function() {
     Validus.createPipeline("email",['isNotEmpty'])
     
     assert.equal(
-        Validus.pipelines.hasOwnProperty('email'), 
+        Validus.getPipelines().hasOwnProperty('email'), 
         true, 
         'Did not store the pipeline properly'
         );
         
     assert.equal(
-        Validus.pipelines.email.length, 
+        Validus.getPipeline('email').length, 
         1, 
         'Pipeline is not the correct length after creation'
         );
         
      assert.equal(
-        Validus.pipelines.email[0],
+        Validus.getPipeline('email')[0],
         'isNotEmpty', 
         'The pipeline did not store the correct validator name'
         );

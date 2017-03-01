@@ -67,7 +67,6 @@ gulp.task('clean:dist', function(){
 gulp.task('build',['clean:dist'], function() {
     
     pump([
-        gulp.src(config.fileList.polyfill),
         gulp.src(genBuildList()),
         concat(config.outputNames.regular),
         babel({presets: ['es2015']}),
@@ -75,7 +74,11 @@ gulp.task('build',['clean:dist'], function() {
         uglify(),
         rename(config.outputNames.minified),
         gulp.dest(config.paths.build)
-    ])
+    ], function(err){
+		if (err)
+			console.log(err);
+	   }
+	)
     
 });
 

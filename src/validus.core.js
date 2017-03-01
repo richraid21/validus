@@ -3,27 +3,42 @@
 var Validus = (function () {
 	
 	var data = {};
-	data.validators = {}
-	data.pipelines = {}
-
-	data.register = (name, obj) => { 
-		pipelineObject.validators[name] = obj;
+	var validators = {};
+	var pipelines = {};
+	var plugins = {};
+	
+	data.registerPlugin = (name) => {plugins[name] = true}
+	
+	data.getLoadedPlugins = () => {
+		return plugins;
 	};
+
+	data.registerValidator = (name, obj) => { 
+		validators[name] = obj;
+	};
+	
+	data.addValidator = (name, obj) => {
+		data.registerValidator(name,obj);
+	}
 	
 	data.getValidators = () => { 
-		return data.validators;
+		return validators;
 	};
 	
+	data.getPipelines = () => {
+		return pipelines;
+	}
+	
 	data.getPipeline = (name) => { 
-		return data.pipelines[name];
+		return pipelines[name];
 	};
 	
 	data.createPipeline = (name, validatorArray) => {
-		data.pipelines[name] = validatorArray;		
+		pipelines[name] = validatorArray;		
 	}
     
     data.addToPipeline = (name, validator, location) => {
-        let pipe = data.pipelines[name];
+        let pipe = pipelines[name];
         location = location || pipe.length;
         
         if (location === pipe.length){
@@ -42,7 +57,7 @@ var Validus = (function () {
 	
 	data.validateStep = (value,validatorName) => {
 		
-		var validator = data.validators[validatorName];
+		var validator = validators[validatorName];
 		
 		var response = {
 			originalValue: value,
@@ -68,7 +83,7 @@ var Validus = (function () {
 	}
 	
 	data.validate = (value, pipeline) => {
-		var pipe = data.pipelines[pipeline];
+		var pipe = pipelines[pipeline];
 		
 		var response = {};
 		
