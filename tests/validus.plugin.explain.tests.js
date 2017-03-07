@@ -1,5 +1,5 @@
 
-var Validus = Validus || require('../../dist/validus.js').Validus;
+var Validus = Validus || require('../dist/validus.js').Validus;
 
 suite('Validus Explain Plugin', function() {
 	  
