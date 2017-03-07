@@ -9,8 +9,8 @@
     "prebuild": "[ -d dist ] || mkdir dist",
     "build": "babel src --out-file ./dist/validus.js --presets=es2015",
     "postbuild": "uglifyjs ./dist/validus.js -c -o ./dist/validus.min.js",
-    "tests": "mocha --ui tdd --recursive ./tests",
-    "all": "yarn run build && yarn run tests"
+    "test": "mocha --ui tdd --recursive ./tests",
+    "all": "yarn run build && yarn run test"
   },
   "dependencies": {},
   "devDependencies": {
